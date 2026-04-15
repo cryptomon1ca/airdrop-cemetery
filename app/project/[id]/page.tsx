@@ -3,6 +3,7 @@
 import { notFound, useRouter } from "next/navigation";
 import { use } from "react";
 import { projects, type Project } from "@/data/projects";
+import { useLivePrices } from "@/hooks/useLivePrices";
 
 const categoryBg: Record<string, string> = {
   DeFi:   "#FF6B00",
@@ -35,6 +36,14 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
   const project: Project | undefined = projects.find(p => p.id === id);
 
   if (!project) notFound();
+
+  // Live prices (shared cache with main page)
+  const { prices: livePrices, lastUpdated } = useLivePrices(projects);
+  const live = livePrices[project.id];
+
+  const displayPrice = live?.currentPrice ?? project.currentPrice;
+  const displayChange = live?.priceChange ?? project.priceChange;
+  const change24h = live?.priceChange24h;
 
   const catBg = categoryBg[project.category] ?? "#FFD700";
   const status = statusMap[project.status];
@@ -90,11 +99,16 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
             <div style={{ background: "#CC0000", border: "4px solid #000", padding: "20px 28px", textAlign: "center", boxShadow: "6px 6px 0 #000", flexShrink: 0 }}>
               <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.15em", color: "#ffaaaa", textTransform: "uppercase", marginBottom: 6 }}>总崩跌幅度</div>
               <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 72, color: "#fff", lineHeight: 1, letterSpacing: "-0.02em" }}>
-                {project.priceChange}%
+                {displayChange}%
               </div>
               <div style={{ fontSize: 11, color: "#ffaaaa", fontWeight: 700, letterSpacing: "0.1em", marginTop: 4 }}>
-                ${project.athPrice} → ${project.currentPrice}
+                ${project.athPrice} → ${displayPrice}
               </div>
+              {change24h !== undefined && (
+                <div style={{ fontSize: 10, color: change24h >= 0 ? "#aaffaa" : "#ffaaaa", marginTop: 4, fontWeight: 700 }}>
+                  {change24h >= 0 ? "▲" : "▼"} {Math.abs(change24h)}% 24h
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -109,8 +123,9 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
 
             {/* Price timeline */}
             <section style={{ background: "#fff", border: "3px solid #000", boxShadow: "5px 5px 0 #000" }}>
-              <div style={{ background: "#000", padding: "10px 16px", borderBottom: "3px solid #000" }}>
+              <div style={{ background: "#000", padding: "10px 16px", borderBottom: "3px solid #000", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: 11, fontWeight: 900, letterSpacing: "0.14em", color: "#FFD700", textTransform: "uppercase" }}>💸 价格轨迹</span>
+                {lastUpdated && <span style={{ fontSize: 9, color: "#888", letterSpacing: "0.06em" }}>🟢 {lastUpdated}</span>}
               </div>
               <div style={{ padding: 20, display: "flex", gap: 12, alignItems: "stretch" }}>
                 <div style={{ flex: 1, border: "2px solid #000", padding: "14px 16px" }}>
@@ -124,9 +139,14 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
                 <div style={{ flex: 1, border: "3px solid #CC0000", padding: "14px 16px", background: "#fff5f5" }}>
                   <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.12em", color: "#CC0000", textTransform: "uppercase", marginBottom: 6 }}>📉 当前价格</div>
                   <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 36, color: "#CC0000", lineHeight: 1 }}>
-                    ${project.currentPrice}
+                    ${displayPrice}
                   </div>
-                  <div style={{ fontSize: 11, color: "#CC0000", marginTop: 6 }}>跌幅 {project.priceChange}%</div>
+                  <div style={{ fontSize: 11, color: "#CC0000", marginTop: 6 }}>跌幅 {displayChange}%</div>
+                  {change24h !== undefined && (
+                    <div style={{ fontSize: 10, color: change24h >= 0 ? "#228B22" : "#CC0000", marginTop: 3, fontWeight: 700 }}>
+                      {change24h >= 0 ? "▲" : "▼"} {Math.abs(change24h)}% 24h
+                    </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -141,7 +161,7 @@ export default function ProjectPage({ params }: { params: Promise<{ id: string }
                   { label: "TVL 留存率", val: `${project.tvlRetention}%`, sub: "相对峰值" },
                   { label: "炒作等级", val: project.hypeLevel ?? "—", sub: "曾经有多热" },
                   { label: "社区背刺", val: `${project.communityBackstab}/10`, sub: "被坑程度" },
-                  { label: "当前现价", val: `$${project.currentPrice}`, sub: "惨烈现价" },
+                  { label: "当前现价", val: `$${displayPrice}`, sub: "惨烈现价" },
                 ].map(item => (
                   <div key={item.label} style={{ border: "2px solid #000", padding: "12px 14px" }}>
                     <div style={{ fontSize: 9, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: "#888", marginBottom: 6 }}>{item.label}</div>

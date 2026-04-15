@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { projects, categories, type Category, type Project } from "@/data/projects";
+import { useLivePrices, type LivePriceMap } from "@/hooks/useLivePrices";
 
 // ─── Maps ──────────────────────────────────────────────────────────────────
 const statusMap = {
@@ -79,10 +80,15 @@ function TickerBar() {
 }
 
 // ─── Project Card ──────────────────────────────────────────────────────────
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+function ProjectCard({ project, index, livePrice }: { project: Project; index: number; livePrice?: { currentPrice: number; priceChange: number; priceChange24h: number } }) {
   const router = useRouter();
   const catBg = categoryBg[project.category];
   const status = statusMap[project.status];
+
+  // Use live price if available, fall back to static
+  const displayPrice = livePrice?.currentPrice ?? project.currentPrice;
+  const displayChange = livePrice?.priceChange ?? project.priceChange;
+  const change24h = livePrice?.priceChange24h;
 
   return (
     <div
@@ -119,7 +125,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
         {/* Crash % badge - red explosive style */}
         <div style={{ background: "#CC0000", border: "2.5px solid #000", padding: "5px 10px", textAlign: "center", flexShrink: 0, boxShadow: "3px 3px 0 #000", minWidth: 72 }}>
-          <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", fontFamily: "Georgia, serif", lineHeight: 1 }}>{project.priceChange}%</div>
+          <div style={{ fontSize: 18, fontWeight: 900, color: "#fff", letterSpacing: "-0.02em", fontFamily: "Georgia, serif", lineHeight: 1 }}>{displayChange}%</div>
           <div style={{ fontSize: 8, color: "#ffaaaa", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>崩跌</div>
         </div>
       </div>
@@ -132,13 +138,20 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       {/* Divider */}
       <div style={{ borderTop: "1.5px dashed #ccc", margin: "0 14px" }} />
 
-      {/* THE VALUE PROP label style */}
+      {/* Price */}
       <div style={{ padding: "8px 14px 4px" }}>
-        <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "#CC0000", marginBottom: 4 }}>价格轨迹</div>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 4 }}>
+          <div style={{ fontSize: 9, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "#CC0000" }}>价格轨迹</div>
+          {change24h !== undefined && (
+            <div style={{ fontSize: 9, fontWeight: 800, color: change24h >= 0 ? "#228B22" : "#CC0000", letterSpacing: "0.04em" }}>
+              {change24h >= 0 ? "▲" : "▼"}{Math.abs(change24h)}% 24h
+            </div>
+          )}
+        </div>
         <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12 }}>
           <span style={{ color: "#999", textDecoration: "line-through", fontFamily: "monospace", fontWeight: 700 }}>${project.athPrice}</span>
           <span style={{ color: "#ccc" }}>→</span>
-          <span style={{ color: "#CC0000", fontFamily: "monospace", fontWeight: 900 }}>${project.currentPrice}</span>
+          <span style={{ color: "#CC0000", fontFamily: "monospace", fontWeight: 900 }}>${displayPrice}</span>
         </div>
       </div>
 
@@ -303,6 +316,9 @@ export default function Home() {
   const [nomReason, setNomReason] = useState("");
   const [nomSubmitted, setNomSubmitted] = useState(false);
 
+  // Live price fetching with localStorage cache (12h TTL)
+  const { prices: livePrices, loading: pricesLoading, lastUpdated } = useLivePrices(projects);
+
   const stats = useMemo(() => ({
     total: projects.length,
     dead: projects.filter(p => p.status === "dead").length,
@@ -385,7 +401,7 @@ export default function Home() {
           {filtered.length > 0 ? (
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 20 }}>
               {filtered.map((p, i) => (
-                <ProjectCard key={p.id} project={p} index={i} />
+                <ProjectCard key={p.id} project={p} index={i} livePrice={livePrices[p.id]} />
               ))}
             </div>
           ) : (
@@ -404,7 +420,15 @@ export default function Home() {
       {/* Footer */}
       <div style={{ background: "#000", borderTop: "4px solid #000", padding: "14px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontSize: 11, color: "#555", fontWeight: 700 }}>数据仅供娱乐参考，不构成投资建议</span>
-        <span style={{ fontSize: 11, color: "#555", fontWeight: 700, fontFamily: "monospace" }}>最后更新 2026-03-29</span>
+        <span style={{ fontSize: 11, color: "#555", fontWeight: 700, fontFamily: "monospace", display: "flex", alignItems: "center", gap: 6 }}>
+          {pricesLoading ? (
+            <span style={{ color: "#FFD700" }}>⟳ 加载价格中...</span>
+          ) : lastUpdated ? (
+            <span>🟢 价格更新：{lastUpdated}</span>
+          ) : (
+            <span>价格更新：静态数据</span>
+          )}
+        </span>
       </div>
 
       {/* ── 提名弹窗 ── */}

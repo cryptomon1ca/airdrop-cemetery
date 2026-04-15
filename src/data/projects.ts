@@ -43,7 +43,7 @@ export const projects: Project[] = [
     tvlRetention: 2.6, communityBackstab: 8.5, hypeLevel: 'extreme',
     reasons: ['TVL从17亿美元峰值跌至0.45亿，跌幅97%', '9亿美元空投仅9%发放，其余待解锁', '团队与投资者持仓巨大，抛压持续'],
     controversies: ['大规模女巫过滤误伤真实用户', '空投规则不透明'],
-    links: { website: 'https://starknet.io' },
+    links: { website: 'https://starknet.io', twitter: 'https://x.com/Starknet', coinGecko: 'https://www.coingecko.com/en/coins/starknet' },
   },
   {
     id: 'friend-tech', name: 'Friend.tech', symbol: 'FRIEND', category: 'Social',
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     tvlRetention: 0, communityBackstab: 9.5, hypeLevel: 'extreme',
     reasons: ['无协议TVL，纯投机驱动产品', 'v2版本Keys转积分稀释大户持有价值', '活跃度从峰值暴跌99%，生态彻底死亡'],
     controversies: ['v2机制严重背刺早期用户', '团队弃项目跑路'],
-    links: { website: 'https://friend.tech' },
+    links: { website: 'https://friend.tech', twitter: 'https://x.com/friendtech', coinGecko: 'https://www.coingecko.com/en/coins/friend-tech' },
   },
   {
     id: 'hamster', name: 'Hamster Kombat', symbol: 'HMSTR', category: 'GameFi',
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     tvlRetention: 0, communityBackstab: 9.7, hypeLevel: 'extreme',
     reasons: ['3亿积分换取微薄回报，用户大面积亏损', '日活从2.8亿崩至近零', '电子宠物变成电子打工，最终关服'],
     controversies: ['积分大屠杀', '预期与现实严重落差'],
-    links: { website: 'https://hamsterkombat.com' },
+    links: { website: 'https://hamsterkombat.com', twitter: 'https://x.com/hamster_kombat', coinGecko: 'https://www.coingecko.com/en/coins/hamster-kombat' },
   },
   {
     id: 'zksync', name: 'ZKsync Era', symbol: 'ZK', category: 'L2',
@@ -73,7 +73,7 @@ export const projects: Project[] = [
     tvlRetention: 78, communityBackstab: 4.2, hypeLevel: 'high',
     reasons: ['大规模女巫过滤误伤部分活跃用户', 'TVL有所下滑但基本维持'],
     controversies: ['女巫过滤标准争议', '社区信任裂痕'],
-    links: { website: 'https://zksync.io' },
+    links: { website: 'https://zksync.io', twitter: 'https://x.com/zksync', coinGecko: 'https://www.coingecko.com/en/coins/zksync' },
   },
   {
     id: 'kadena', name: 'Kadena', symbol: 'KDA', category: 'L2',
@@ -83,7 +83,7 @@ export const projects: Project[] = [
     tvlRetention: 1, communityBackstab: 9.9, hypeLevel: 'high',
     reasons: ['2025年10月21日突然宣布关停，KDA单日暴跌60%+', '员工被曝在公告前做空代币，涉嫌内幕交易', 'TVL从峰值$1100万跌至$12.8万，长年无人使用', '宣传的480,000 TPS从未有真实用户验证'],
     controversies: ['内幕做空疑云', '突然关停跑路', '合作伙伴造假'],
-    links: { website: 'https://kadena.io' },
+    links: { website: 'https://kadena.io', twitter: 'https://x.com/kadena_io', coinGecko: 'https://www.coingecko.com/en/coins/kadena' },
   },
   {
     id: 'scroll', name: 'Scroll', symbol: 'SCR', category: 'L2',
@@ -93,7 +93,7 @@ export const projects: Project[] = [
     tvlRetention: 15, communityBackstab: 8.7, hypeLevel: 'high',
     reasons: ['仅7%代币分配空投，团队自留23%', '团队地址被发现参与积分刷取', '快照后24小时TVL暴跌70%，资金瞬间出逃', '前10名鲸鱼独吞空投总量11.7%'],
     controversies: ['团队自Sybil操作', '无鲸鱼保护上限', 'TVL快照后蒸发'],
-    links: { website: 'https://scroll.io' },
+    links: { website: 'https://scroll.io', twitter: 'https://x.com/Scroll_ZKP', coinGecko: 'https://www.coingecko.com/en/coins/scroll' },
   },
   {
     id: 'boba-network', name: 'Boba Network', symbol: 'BOBA', category: 'L2',
@@ -123,7 +123,7 @@ export const projects: Project[] = [
     tvlRetention: 8, communityBackstab: 9.0, hypeLevel: 'extreme',
     reasons: ['锁仓期间资金毫无流动性，用户被强制锁定数月', '空投规则不透明，Gold积分兑换比例远低于预期', 'TGE即ATH，2周内跌去50%+，一年内跌98%'],
     controversies: ['资金强制锁仓无法退出', '积分兑换黑箱操作'],
-    links: { website: 'https://blast.io' },
+    links: { website: 'https://blast.io', twitter: 'https://x.com/Blast_L2', coinGecko: 'https://www.coingecko.com/en/coins/blast' },
   },
   {
     id: 'flow', name: 'Flow', symbol: 'FLOW', category: 'L2',
@@ -153,7 +153,7 @@ export const projects: Project[] = [
     tvlRetention: 5, communityBackstab: 8.9, hypeLevel: 'high',
     reasons: ['New Paradigm活动以高APY骗锁$10亿+，TGE后资金全撤', 'TVL从$10亿+跌至$1500万，跌幅98%+', '空投分配集中大户，散户收益远低于预期'],
     controversies: ['锁仓APY圈套', 'TVL虚假繁荣'],
-    links: { website: 'https://manta.network' },
+    links: { website: 'https://manta.network', twitter: 'https://x.com/MantaNetwork', coinGecko: 'https://www.coingecko.com/en/coins/manta-network' },
   },
   {
     id: 'moonbeam', name: 'Moonbeam', symbol: 'GLMR', category: 'L2',
@@ -163,7 +163,7 @@ export const projects: Project[] = [
     tvlRetention: 2, communityBackstab: 8.0, hypeLevel: 'high',
     reasons: ['TGE即ATH，此后价格一路单边下跌超99%', '平行链插槽靠DOT众贷赢得，归还后社区失去激励', 'Polkadot生态整体热度消退，平行链叙事破灭'],
     controversies: ['DOT众贷套牢社区用户', '平行链赛道叙事破灭'],
-    links: { website: 'https://moonbeam.network' },
+    links: { website: 'https://moonbeam.network', twitter: 'https://x.com/MoonbeamNetwork', coinGecko: 'https://www.coingecko.com/en/coins/moonbeam' },
   },
   {
     id: 'radix', name: 'Radix', symbol: 'XRD', category: 'L2',
@@ -183,7 +183,7 @@ export const projects: Project[] = [
     tvlRetention: 12, communityBackstab: 8.8, hypeLevel: 'extreme',
     reasons: ['上线首日TPS仅4，远低于宣传的130,000，相差32,500倍', '51%代币由团队+投资人持有，散户被极度稀释', '无Anti-Sybil保护，单人卖出189,567 APT直接砸盘', 'Binance上线时APT合约崩溃，被迫延迟'],
     controversies: ['TPS造假32,500倍', '团队内部人暴砸', '上线当天技术全面崩溃'],
-    links: { website: 'https://aptoslabs.com' },
+    links: { website: 'https://aptoslabs.com', twitter: 'https://x.com/Aptos', coinGecko: 'https://www.coingecko.com/en/coins/aptos' },
   },
   {
     id: 'eigenlayer', name: 'EigenLayer', symbol: 'EIGEN', category: 'DeFi',
@@ -193,7 +193,7 @@ export const projects: Project[] = [
     tvlRetention: 35, communityBackstab: 9.3, hypeLevel: 'extreme',
     reasons: ['封锁美国、中国、俄罗斯等30个国家用户，存款却无地区限制', '仅5%分配给社区，团队+VC拿55%，集中度极高', '代币空投后数月内不可转让，积累一年积分换来「锁仓通知书」', '空投公告后24小时内$4.57亿ETH出逃'],
     controversies: ['地缘封锁背刺全球用户', '代币空投后不可转让', '向关联项目索贿疑云'],
-    links: { website: 'https://eigenlayer.xyz' },
+    links: { website: 'https://eigenlayer.xyz', twitter: 'https://x.com/eigenlayer', coinGecko: 'https://www.coingecko.com/en/coins/eigenlayer' },
   },
   {
     id: 'layerzero', name: 'LayerZero', symbol: 'ZRO', category: 'DeFi',
@@ -203,7 +203,7 @@ export const projects: Project[] = [
     tvlRetention: 20, communityBackstab: 9.1, hypeLevel: 'extreme',
     reasons: ['「Proof of Donation」：领取每个ZRO须先向Protocol Guild捐$0.10', 'CEO回应「没人欠你空投，不捐别领」，态度极度强硬', 'TGE即ATH，4小时内暴跌22%，社区愤怒达到顶点', 'top 0.13%用户最终仅收到39枚ZRO，性价比极低'],
     controversies: ['付费领空投史上首创', 'CEO公开出言不逊', '举报战导致社区内耗'],
-    links: { website: 'https://layerzero.network' },
+    links: { website: 'https://layerzero.network', twitter: 'https://x.com/LayerZero_Core', coinGecko: 'https://www.coingecko.com/en/coins/layerzero' },
   },
   {
     id: 'wormhole', name: 'Wormhole', symbol: 'W', category: 'DeFi',
@@ -213,7 +213,7 @@ export const projects: Project[] = [
     tvlRetention: 18, communityBackstab: 7.8, hypeLevel: 'high',
     reasons: ['TGE当天创始人X账号遭黑，发布钓鱼链接，ZachXBT紧急全网预警', '空投公告下大量金标认证诈骗账号涌现，用户大面积被骗', '空投仅6.75%，$30亿FDV泡沫巨大，估值严重虚高', '2022年曾遭$3.2亿黑客攻击，安全记录堪忧'],
     controversies: ['创始人账号被黑当天TGE', '钓鱼诈骗大规模蔓延', '$3.2亿历史安全事故'],
-    links: { website: 'https://wormhole.com' },
+    links: { website: 'https://wormhole.com', twitter: 'https://x.com/wormhole', coinGecko: 'https://www.coingecko.com/en/coins/wormhole' },
   },
   {
     id: 'altlayer', name: 'AltLayer', symbol: 'ALT', category: 'L2',
@@ -223,7 +223,7 @@ export const projects: Project[] = [
     tvlRetention: 3, communityBackstab: 9.0, hypeLevel: 'high',
     reasons: ['快照公告前数分钟，内部人批量抛售OG Badge NFT（7.7 ETH砸至2.3 ETH）', '400枚OG Badge中100枚预留给团队/KOL，分配不公', 'Arkham链上追踪发现7大空投鲸鱼全部立刻清仓', '团队对此解释为「巧合」，无任何问责'],
     controversies: ['内部人快照前精准砸盘', 'NFT席位预留给团队KOL', '链上证据抓包清仓'],
-    links: { website: 'https://altlayer.io' },
+    links: { website: 'https://altlayer.io', twitter: 'https://x.com/alt_layer', coinGecko: 'https://www.coingecko.com/en/coins/altlayer' },
   },
   {
     id: 'berachain', name: 'Berachain', symbol: 'BERA', category: 'L2',
@@ -233,7 +233,7 @@ export const projects: Project[] = [
     tvlRetention: 4, communityBackstab: 9.0, hypeLevel: 'extreme',
     reasons: ['TGE前靠高APY锁仓超$30亿TVL，上线后资金如潮水退出', 'PoL机制本质是通胀飞轮，BGT只能通过质押赚取再质押，最终崩盘', 'FDV高达$170亿，严重脱离基本面', 'TGE后3个月内跌去96.7%，熊熊NFT持有者集体哭晕'],
     controversies: ['PoL通胀飞轮崩解', 'TVL锁仓期骗局', 'NFT社区信仰崩塌'],
-    links: { website: 'https://berachain.com', twitter: 'https://twitter.com/berachain', coinGecko: 'https://www.coingecko.com/en/coins/berachain-token' },
+    links: { website: 'https://berachain.com', twitter: 'https://x.com/berachain', coinGecko: 'https://www.coingecko.com/en/coins/berachain' },
   },
   {
     id: 'story-protocol', name: 'Story Protocol', symbol: 'IP', category: 'DeFi',
@@ -243,7 +243,7 @@ export const projects: Project[] = [
     tvlRetention: 6, communityBackstab: 8.8, hypeLevel: 'extreme',
     reasons: ['TGE后2个月内跌去94%，AI叙事退潮速度超出预期', '团队于2025年2月宣布延迟6个月解锁，被社区解读为砸盘预警', '「链上IP登记」实际使用场景极度匮乏，协议几乎无真实用户', 'FDV $20亿+严重虚高，仅靠资本叙事支撑'],
     controversies: ['解锁延迟砸盘预警', 'AI叙事割韭菜', '无实际用例支撑'],
-    links: { website: 'https://storyprotocol.xyz', twitter: 'https://twitter.com/StoryProtocol', coinGecko: 'https://www.coingecko.com/en/coins/story' },
+    links: { website: 'https://storyprotocol.xyz', twitter: 'https://x.com/StoryProtocol', coinGecko: 'https://www.coingecko.com/en/coins/story' },
   },
   {
     id: 'animecoin', name: 'Animecoin', symbol: 'ANIME', category: 'Meme',
@@ -253,7 +253,7 @@ export const projects: Project[] = [
     tvlRetention: 2, communityBackstab: 8.5, hypeLevel: 'high',
     reasons: ['空投标准将大量贡献者排除在外，只有NFT持有者才能获得最大份额', 'Azuki NFT系列本身已因「Elementals」丑闻严重失信，ANIME接盘侠稀少', '文化代币缺乏经济捕获机制，持有即亏损', '上线即砸，Azuki持有者纷纷出逃变现'],
     controversies: ['Elementals历史丑闻拖累', 'NFT持有者信仰崩塌', '文化代币零经济价值'],
-    links: { website: 'https://anime.com', twitter: 'https://twitter.com/animecoin_', coinGecko: 'https://www.coingecko.com/en/coins/animecoin' },
+    links: { website: 'https://anime.com', twitter: 'https://x.com/animecoin_', coinGecko: 'https://www.coingecko.com/en/coins/anime' },
   },
   {
     id: 'linea', name: 'Linea', symbol: 'LINEA', category: 'L2',
@@ -263,7 +263,7 @@ export const projects: Project[] = [
     tvlRetention: 18, communityBackstab: 7.2, hypeLevel: 'high',
     reasons: ['空投总量94亿枚，超额稀释持有者，代币无通缩机制', 'Consensys公司本身面临资金压力，2024年裁员20%，团队代币抛压隐忧', 'ZK-EVM赛道竞争极度饱和，无差异化优势', 'TVL峰值后持续流失，生态活跃度低迷'],
     controversies: ['母公司财务危机阴影', 'ZK赛道过度竞争', '空投过度稀释'],
-    links: { website: 'https://linea.build', twitter: 'https://twitter.com/lineabuild', coinGecko: 'https://www.coingecko.com/en/coins/linea' },
+    links: { website: 'https://linea.build', twitter: 'https://x.com/lineabuild', coinGecko: 'https://www.coingecko.com/en/coins/linea' },
   },
   {
     id: 'backpack', name: 'Backpack', symbol: 'BP', category: 'DeFi',
@@ -273,6 +273,6 @@ export const projects: Project[] = [
     tvlRetention: 62, communityBackstab: 5.5, hypeLevel: 'high',
     reasons: ['TGE首日大量空投用户抛售，24小时跌幅25.8%', '25%代币分配空投，卖压巨大，开盘即面临持续砸盘', '交易所赛道极度饱和，与Binance/OKX竞争存在巨大差距'],
     controversies: ['开盘即遭空投用户砸盘', '代币分配比例引发争议', '上线首周走势极度疲软'],
-    links: { website: 'https://backpack.exchange', twitter: 'https://twitter.com/backpackapp', coinGecko: 'https://www.coingecko.com/en/coins/backpack-exchange' },
+    links: { website: 'https://backpack.exchange', twitter: 'https://x.com/backpackapp', coinGecko: 'https://www.coingecko.com/en/coins/backpack' },
   },
 ]

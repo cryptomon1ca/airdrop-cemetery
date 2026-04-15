@@ -87,7 +87,6 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <div
       onClick={() => router.push(`/project/${project.id}`)}
-      className="cursor-pointer group"
       style={{
         background: "#fff",
         border: "3px solid #000",
@@ -95,6 +94,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         transition: "transform 0.1s, box-shadow 0.1s",
         animation: `fadeInUp 0.3s ease-out both`,
         animationDelay: `${index * 50}ms`,
+        cursor: "pointer",
       }}
       onMouseEnter={e => {
         (e.currentTarget as HTMLDivElement).style.transform = "translate(-2px, -2px)";
@@ -171,7 +171,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
 // ─── Sidebar ───────────────────────────────────────────────────────────────
 function Sidebar({
-  selectedCategory, setSelectedCategory, sortKey, setSortKey, searchQuery, setSearchQuery,
+  selectedCategory, setSelectedCategory, sortKey, setSortKey, searchQuery, setSearchQuery, onNominate,
 }: {
   selectedCategory: Category;
   setSelectedCategory: (c: Category) => void;
@@ -179,6 +179,7 @@ function Sidebar({
   setSortKey: (s: SortKey) => void;
   searchQuery: string;
   setSearchQuery: (s: string) => void;
+  onNominate: () => void;
 }) {
   return (
     <aside style={{ width: 220, flexShrink: 0, position: "sticky", top: 0, height: "100vh", overflowY: "auto", background: "#FFD700", borderRight: "4px solid #000", display: "flex", flexDirection: "column" }}>
@@ -228,7 +229,7 @@ function Sidebar({
       </div>
 
       {/* Sort */}
-      <div style={{ padding: "12px 14px" }}>
+      <div style={{ padding: "12px 14px", borderBottom: "3px solid #000" }}>
         <div style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "#000", marginBottom: 8 }}>📊 排序方式</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
           {([
@@ -256,6 +257,38 @@ function Sidebar({
           ))}
         </div>
       </div>
+
+      {/* Nominate button */}
+      <div style={{ padding: "16px 14px", marginTop: "auto" }}>
+        <button
+          onClick={onNominate}
+          style={{
+            width: "100%",
+            padding: "11px 10px",
+            background: "#CC0000",
+            border: "2.5px solid #000",
+            boxShadow: "3px 3px 0 #000",
+            cursor: "pointer",
+            fontSize: 12,
+            fontWeight: 900,
+            letterSpacing: "0.06em",
+            color: "#fff",
+            textTransform: "uppercase",
+            transition: "transform 0.1s, box-shadow 0.1s",
+          }}
+          onMouseEnter={e => {
+            (e.currentTarget as HTMLButtonElement).style.transform = "translate(-2px,-2px)";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "5px 5px 0 #000";
+          }}
+          onMouseLeave={e => {
+            (e.currentTarget as HTMLButtonElement).style.transform = "";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "3px 3px 0 #000";
+          }}
+        >
+          🪦 我要提名
+        </button>
+        <div style={{ fontSize: 9, color: "#888", marginTop: 6, textAlign: "center", letterSpacing: "0.06em" }}>提名下一个空投受害者</div>
+      </div>
     </aside>
   );
 }
@@ -265,6 +298,10 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<Category>("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [sortKey, setSortKey] = useState<SortKey>("date");
+  const [showNominate, setShowNominate] = useState(false);
+  const [nomProject, setNomProject] = useState("");
+  const [nomReason, setNomReason] = useState("");
+  const [nomSubmitted, setNomSubmitted] = useState(false);
 
   const stats = useMemo(() => ({
     total: projects.length,
@@ -335,6 +372,7 @@ export default function Home() {
           setSortKey={setSortKey}
           searchQuery={searchQuery}
           setSearchQuery={setSearchQuery}
+          onNominate={() => { setShowNominate(true); setNomSubmitted(false); setNomProject(""); setNomReason(""); }}
         />
 
         {/* Main grid */}
@@ -366,9 +404,98 @@ export default function Home() {
       {/* Footer */}
       <div style={{ background: "#000", borderTop: "4px solid #000", padding: "14px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <span style={{ fontSize: 11, color: "#555", fontWeight: 700 }}>数据仅供娱乐参考，不构成投资建议</span>
-        <span style={{ fontSize: 11, color: "#555", fontWeight: 700, fontFamily: "monospace" }}>最后更新 2026-03-06</span>
+        <span style={{ fontSize: 11, color: "#555", fontWeight: 700, fontFamily: "monospace" }}>最后更新 2026-03-29</span>
       </div>
 
+      {/* ── 提名弹窗 ── */}
+      {showNominate && (
+        <div
+          onClick={() => setShowNominate(false)}
+          style={{ position: "fixed", inset: 0, background: "rgba(0,0,0,0.75)", zIndex: 999, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ background: "#FFD700", border: "4px solid #000", boxShadow: "8px 8px 0 #000", width: 460, maxWidth: "100%" }}
+          >
+            {/* Header */}
+            <div style={{ background: "#000", padding: "14px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <span style={{ fontSize: 13, fontWeight: 900, letterSpacing: "0.12em", color: "#FFD700", textTransform: "uppercase" }}>🪦 提名入墓</span>
+              <button
+                onClick={() => setShowNominate(false)}
+                style={{ background: "none", border: "none", color: "#FFD700", fontSize: 22, cursor: "pointer", lineHeight: 1, padding: "0 4px" }}
+              >✕</button>
+            </div>
+
+            {nomSubmitted ? (
+              /* Success state */
+              <div style={{ padding: "40px 32px", textAlign: "center" }}>
+                <div style={{ fontSize: 56, marginBottom: 14 }}>💀</div>
+                <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: 32, letterSpacing: "0.04em", marginBottom: 8 }}>已收到提名</div>
+                <div style={{ fontSize: 13, color: "#555", lineHeight: 1.6 }}>感谢你的墓志铭贡献<br />我们会审核后决定是否收录</div>
+                <button
+                  onClick={() => setShowNominate(false)}
+                  style={{ marginTop: 20, padding: "10px 24px", background: "#000", border: "2.5px solid #000", color: "#FFD700", fontSize: 12, fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase", cursor: "pointer" }}
+                >关闭</button>
+              </div>
+            ) : (
+              /* Form */
+              <div style={{ padding: "24px" }}>
+                <div style={{ fontSize: 12, color: "#333", marginBottom: 20, lineHeight: 1.6 }}>
+                  发现了一个空投后归零的项目？提名它进入墓地，让更多人引以为戒。
+                </div>
+
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "#333", display: "block", marginBottom: 6 }}>
+                    项目名称 / Symbol *
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="e.g. Berachain / BERA"
+                    value={nomProject}
+                    onChange={e => setNomProject(e.target.value)}
+                    style={{ width: "100%", padding: "10px 12px", fontSize: 14, fontWeight: 700, border: "2.5px solid #000", background: "#fff", outline: "none", boxSizing: "border-box" }}
+                  />
+                </div>
+
+                <div style={{ marginBottom: 16 }}>
+                  <label style={{ fontSize: 10, fontWeight: 900, letterSpacing: "0.14em", textTransform: "uppercase", color: "#333", display: "block", marginBottom: 6 }}>
+                    为什么它该进墓地？
+                  </label>
+                  <textarea
+                    placeholder="说说它怎么背刺了你，跌了多少，有什么丑闻..."
+                    value={nomReason}
+                    onChange={e => setNomReason(e.target.value)}
+                    rows={4}
+                    style={{ width: "100%", padding: "10px 12px", fontSize: 13, border: "2.5px solid #000", background: "#fff", outline: "none", resize: "vertical", boxSizing: "border-box", fontFamily: "inherit", lineHeight: 1.6 }}
+                  />
+                </div>
+
+                <div style={{ display: "flex", gap: 10 }}>
+                  <button
+                    onClick={() => setShowNominate(false)}
+                    style={{ flex: 1, padding: "11px", background: "#fff", border: "2.5px solid #000", cursor: "pointer", fontSize: 12, fontWeight: 800, letterSpacing: "0.04em" }}
+                  >取消</button>
+                  <button
+                    onClick={() => { if (nomProject.trim()) setNomSubmitted(true); }}
+                    disabled={!nomProject.trim()}
+                    style={{
+                      flex: 2, padding: "11px",
+                      background: nomProject.trim() ? "#CC0000" : "#ccc",
+                      border: "2.5px solid #000",
+                      boxShadow: nomProject.trim() ? "3px 3px 0 #000" : "none",
+                      cursor: nomProject.trim() ? "pointer" : "not-allowed",
+                      fontSize: 13, fontWeight: 900, color: "#fff",
+                      letterSpacing: "0.08em", textTransform: "uppercase",
+                    }}
+                  >
+                    💀 提交提名
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
     </>
   );

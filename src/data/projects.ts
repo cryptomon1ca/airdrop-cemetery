@@ -27,13 +27,13 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: 'opinion', name: 'Opinion', symbol: 'OPN', category: 'DeFi',
-    description: '去中心化预测市场，曾被宣传为「预测市场的革命」，TGE当日即ATH',
-    tgeDate: '2024-12-18', status: 'dead',
-    athPrice: 3.2, currentPrice: 0.08, priceChange: -97.9.5,
+    description: '链上预测市场协议，Binance Launchpool项目，TGE即ATH，随后瀑布式下跌，空投规则被指黑箱操作',
+    tgeDate: '2026-03-02', status: 'dead',
+    athPrice: 0.4646, currentPrice: 0.178, priceChange: -61.7,
     tvlRetention: 0, communityBackstab: 9.8, hypeLevel: 'extreme',
-    reasons: ['TGE当天即ATH，随后瀑布式下跌', '23.5%代币用于空投，但首批仅解锁3.5%', 'VC和团队持54%，严重稀释持有者', 'KOL投入5万USDT仅回1.5万'],
-    controversies: ['解锁比例极低', '规则临时更改', '社区大面积亏损'],
-    links: { website: 'https://opiniondex.io' },
+    reasons: ['TGE当天即ATH $0.46，随后瀑布式下跌', '23.5%代币用于空投，但首批仅解锁3.5%，其余7个月缓释', 'VC和团队持54%，12个月锁定期结束后砸盘隐患极大', 'Binance Launchpool分配仅2%供应量，散户所得极为有限'],
+    controversies: ['解锁比例极低且规则不透明', '空投标准多次临时更改', '社区大面积亏损'],
+    links: { website: 'https://opinion.trade', twitter: 'https://x.com/opinionlabs_', coinGecko: 'https://www.coingecko.com/en/coins/opinion' },
   },
   {
     id: 'starknet', name: 'Starknet', symbol: 'STRK', category: 'L2',

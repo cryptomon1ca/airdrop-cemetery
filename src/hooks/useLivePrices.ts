@@ -19,7 +19,7 @@ const CG_ID_MAP: Record<string, string> = {
   'wormhole':       'wormhole',
   'altlayer':       'altlayer',
   'berachain':      'berachain',
-  'story-protocol': 'story',
+  // 'story-protocol': 'story',  // CoinGecko slug 'story' maps to wrong coin; use static data
   'animecoin':      'anime',
   'linea':          'linea',
   'backpack':       'backpack',
